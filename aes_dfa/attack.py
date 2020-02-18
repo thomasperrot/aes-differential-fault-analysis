@@ -16,7 +16,6 @@ def attack(normal_cipher_text: str, faulty_cipher_text: str) -> List[str]:
     for last_key in get_last_keys(normal_state, faulty_state):
         original_key = get_first_key(last_key, 11)
         original_key_str = binascii.hexlify(original_key).decode()
-        print(f"[+] Found key {original_key_str}")
         possible_keys.append(original_key_str)
     return possible_keys
 
@@ -26,6 +25,7 @@ def get_last_keys(normal_state: State, faulty_state: State) -> Generator[bytes, 
     equations = get_all_possible_keys(normal_state, faulty_state)
     print("[ ] Reducing key space...")
     yield from reduce_key_space(normal_state, faulty_state, equations)
+    print("[+] Finished !")
 
 
 def _get_state(cipher_text: bytes) -> State:
